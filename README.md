@@ -48,3 +48,4 @@ A highly interactive, terminal-inspired developer portfolio designed to mimic a 
 ## 📝 License
 
 This project is open-source and available under the [MIT License](LICENSE).
+# my-portfolio
