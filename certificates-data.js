@@ -1,0 +1,1 @@
+window.CERT_IMAGES = [];
