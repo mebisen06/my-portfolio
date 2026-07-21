@@ -50,6 +50,7 @@
             <a href="#about">ABOUT</a>
             <a href="#skills">SKILLS</a>
             <a href="#projects">PROJECTS</a>
+            <a href="#github-stats">STATS</a>
             <a href="#experience">EXPERIENCE</a>
             <a href="#contact">CONTACT</a>
         </div>
@@ -305,6 +306,75 @@
 
             <div class="projects-grid" id="dynamic-projects-grid">
                 <!-- Projects will be dynamically loaded here by script.js -->
+            </div>
+        </section>
+
+        <!-- GitHub Stats Section -->
+        <section id="github-stats" class="github-section reveal-on-scroll">
+            <div class="section-header">
+                <h2 class="section-title">SYSTEM_METRICS</h2>
+                <p class="section-subtitle terminal-text" style="border: none; padding-left: 0;">&gt; Fetching GitHub telemetry for USER: mebisen06...</p>
+            </div>
+
+            <div class="github-container">
+                <!-- Stats Cards Grid -->
+                <div class="stats-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">REPOSITORIES</span>
+                            <span class="stat-value" id="github-repos">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">STARS EARNED</span>
+                            <span class="stat-value" id="github-stars">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">FOLLOWERS</span>
+                            <span class="stat-value" id="github-followers">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">CONTRIBUTIONS</span>
+                            <span class="stat-value" id="github-contributions">53</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Contribution Calendar Panel -->
+                <div class="calendar-card">
+                    <div class="calendar-header">
+                        <span class="calendar-title">CONTRIBUTION_GRAPH</span>
+                        <div class="calendar-legend">
+                            <span>Less</span>
+                            <span class="legend-color level-0"></span>
+                            <span class="legend-color level-1"></span>
+                            <span class="legend-color level-2"></span>
+                            <span class="legend-color level-3"></span>
+                            <span class="legend-color level-4"></span>
+                            <span>More</span>
+                        </div>
+                    </div>
+                    <div class="calendar-body">
+                        <img src="https://ghchart.rshah.org/d4af37/mebisen06" alt="mebisen06 GitHub Contributions Chart" class="contrib-chart" />
+                    </div>
+                </div>
             </div>
         </section>
 

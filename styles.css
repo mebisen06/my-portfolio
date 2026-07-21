@@ -1644,3 +1644,227 @@ body.terminal-active {
         padding: 0;
     }
 }
+
+/* GitHub Stats Section styling */
+.github-section {
+    padding: 80px var(--margin-desktop);
+    border-top: 1px solid var(--surface-container-high);
+}
+
+.github-container {
+    max-width: 1000px;
+    margin: 40px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.stats-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .stats-cards-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .github-section {
+        padding: 60px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--surface-container-high);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 4px;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--outline);
+    letter-spacing: 0.1em;
+}
+
+.stat-value {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    color: var(--on-background);
+    line-height: 1.2;
+}
+
+.calendar-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--surface-container-high);
+    padding: 32px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--surface-container-high);
+    padding-bottom: 16px;
+}
+
+.calendar-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--on-background);
+    letter-spacing: 0.1em;
+}
+
+.calendar-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--outline);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.legend-color.level-0 { background-color: #161b22; }
+.legend-color.level-1 { background-color: rgba(212, 175, 55, 0.25); }
+.legend-color.level-2 { background-color: rgba(212, 175, 55, 0.5); }
+.legend-color.level-3 { background-color: rgba(212, 175, 55, 0.75); }
+.legend-color.level-4 { background-color: rgb(212, 175, 55); }
+
+.calendar-body {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.contrib-chart {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.05));
+}
+
+/* --- PREMIUM GLOW & GLASSMORPHISM UPGRADES --- */
+
+/* Glassmorphism background overrides */
+.project-card, 
+.stat-card, 
+.calendar-card, 
+.timeline-card, 
+.link-card, 
+.terminal-form {
+    position: relative !important;
+    background: rgba(14, 14, 14, 0.6) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    overflow: hidden !important;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s !important;
+    transform-style: preserve-3d;
+}
+
+/* Mouse-tracking glow overlay */
+.project-card::before, 
+.stat-card::before, 
+.calendar-card::before, 
+.timeline-card::before, 
+.link-card::before, 
+.terminal-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+        rgba(255, 215, 0, 0.09),
+        transparent 80%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.project-card:hover::before, 
+.stat-card:hover::before, 
+.calendar-card:hover::before, 
+.timeline-card:hover::before, 
+.link-card:hover::before, 
+.terminal-form:hover::before {
+    opacity: 1;
+}
+
+/* Glowing borders and boxes on hover */
+.project-card:hover, 
+.stat-card:hover, 
+.calendar-card:hover, 
+.timeline-card:hover, 
+.link-card:hover, 
+.terminal-form:hover {
+    border-color: rgba(255, 215, 0, 0.35) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 215, 0, 0.12) !important;
+}
+
+/* Content layer preservation for 3D depth */
+.project-card > *, 
+.stat-card > *, 
+.calendar-card > *, 
+.timeline-card > *, 
+.link-card > *, 
+.terminal-form > * {
+    position: relative;
+    z-index: 2;
+    transform: translateZ(10px);
+}
+
+/* Header Text glow updates */
+.section-title {
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+}
+
+.contact-title {
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.4);
+}

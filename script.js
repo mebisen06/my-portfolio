@@ -121,6 +121,26 @@ document.addEventListener('DOMContentLoaded', () => {
             live_link: "https://github.com/mebisen06/Loop.in"
         },
         {
+            title: "Folioo.in – Creator Platform",
+            version: "v1.0.0",
+            status: "STATUS: ACTIVE // FULL-STACK WEB / SAAS",
+            description: "A premium developer-first creator platform and resume builder. Features a dark-mode analytics dashboard, dynamic portfolio management, and an interactive PDF resume builder/exporter.",
+            tags: "React, TypeScript, Vite, Tailwind CSS, Firebase, Recharts",
+            folder_link: "#",
+            code_link: "https://github.com/mebisen06/folioo.in",
+            live_link: "https://folioo-in.vercel.app"
+        },
+        {
+            title: "Trust AI – Fake Review Detector",
+            version: "v1.0.0",
+            status: "STATUS: ACTIVE // AI / MACHINE LEARNING",
+            description: "An AI-powered web application for detecting fake reviews. Built with a FastAPI backend and React frontend. Features real-time text analysis, confidence scores, and analytics dashboards.",
+            tags: "FastAPI, Python, React, Vite, NLP, Machine Learning",
+            folder_link: "#",
+            code_link: "https://github.com/mebisen06/trust-ai",
+            live_link: "#"
+        },
+        {
             title: "Mediva AI",
             version: "v1.0.0",
             status: "STATUS: ACTIVE // AI CHATBOT",
@@ -138,15 +158,32 @@ document.addEventListener('DOMContentLoaded', () => {
         data.forEach(p => {
             const tagsHtml = (p.tags || '').split(',').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
             
+            // Conditionally construct links to hide them if they are placeholders (#)
+            const folderLinkHtml = p.folder_link && p.folder_link !== '#' 
+                ? `<a href="${p.folder_link}" aria-label="Folder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></a>` 
+                : '';
+                
+            const codeLinkHtml = p.code_link && p.code_link !== '#' 
+                ? `<a href="${p.code_link}" target="_blank" aria-label="Code"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></a>` 
+                : '';
+                
+            const liveLinkHtml = p.live_link && p.live_link !== '#' 
+                ? `<a href="${p.live_link}" target="_blank" aria-label="External Link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>` 
+                : '';
+
+            const titleHtml = p.live_link && p.live_link !== '#'
+                ? `<a href="${p.live_link}" target="_blank" style="color: inherit; text-decoration: none;">${p.title}</a>`
+                : p.title;
+
             projectsGrid.innerHTML += `
                 <div class="project-card">
                     <div class="project-version">${p.version}</div>
                     <div class="project-header">
-                        <h3 class="project-title"><a href="${p.live_link !== '#' ? p.live_link : '#'}" target="_blank" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
+                        <h3 class="project-title">${titleHtml}</h3>
                         <div class="project-links">
-                            <a href="${p.folder_link}" aria-label="Folder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></a>
-                            <a href="${p.code_link}" aria-label="Code"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></a>
-                            <a href="${p.live_link}" target="_blank" aria-label="External Link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
+                            ${folderLinkHtml}
+                            ${codeLinkHtml}
+                            ${liveLinkHtml}
                         </div>
                     </div>
                     <div class="project-status">${p.status}</div>
@@ -157,6 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         });
+
+        // Re-initialize premium card interactive glow & tilt effects
+        if (typeof initCardGlow === 'function') {
+            initCardGlow();
+        }
     }
 
     if (projectsGrid) {
@@ -285,6 +327,138 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- GITHUB STATS TELEMETRY ---
+    const githubUsername = 'mebisen06';
+    const fallbackStats = {
+        public_repos: 10,
+        followers: 5,
+        stars: 3,
+        contributions: 53
+    };
+
+    async function fetchGitHubStats() {
+        const reposEl = document.getElementById('github-repos');
+        const starsEl = document.getElementById('github-stars');
+        const followersEl = document.getElementById('github-followers');
+        const contribEl = document.getElementById('github-contributions');
+
+        if (!reposEl) return;
+
+        // Apply loading effect/states first
+        reposEl.innerText = '--';
+        starsEl.innerText = '--';
+        followersEl.innerText = '--';
+
+        try {
+            // Fetch User profile details
+            const userResponse = await fetch(`https://api.github.com/users/${githubUsername}`);
+            if (!userResponse.ok) throw new Error('Failed to fetch user profile');
+            const userData = await userResponse.json();
+
+            // Fetch Repos to sum stars
+            const reposResponse = await fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`);
+            let starsCount = 0;
+            if (reposResponse.ok) {
+                const reposData = await reposResponse.json();
+                starsCount = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+            } else {
+                starsCount = fallbackStats.stars;
+            }
+
+            // Animate number stats for a premium feeling
+            animateStatValue(reposEl, userData.public_repos);
+            animateStatValue(followersEl, userData.followers);
+            animateStatValue(starsEl, starsCount);
+
+        } catch (error) {
+            console.error('Error fetching GitHub stats, using fallback:', error);
+            reposEl.innerText = fallbackStats.public_repos;
+            followersEl.innerText = fallbackStats.followers;
+            starsEl.innerText = fallbackStats.stars;
+        }
+
+        // Fetch contribution counts dynamically (non-critical, handles CORS issues/flakiness safely)
+        try {
+            const contribResponse = await fetch(`https://github-contributions-api.deno.dev/${githubUsername}.json`);
+            if (contribResponse.ok) {
+                const contribData = await contribResponse.json();
+                if (contribData && typeof contribData.totalContributions === 'number') {
+                    animateStatValue(contribEl, contribData.totalContributions);
+                }
+            }
+        } catch (cErr) {
+            console.log('Using static contribution fallback count');
+            contribEl.innerText = fallbackStats.contributions;
+        }
+    }
+
+    function animateStatValue(element, targetValue) {
+        if (!element) return;
+        const duration = 1000; // ms
+        const startTime = performance.now();
+        const startValue = 0;
+
+        function update(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            if (elapsedTime >= duration) {
+                element.innerText = targetValue;
+                return;
+            }
+            const progress = elapsedTime / duration;
+            // Ease out quad
+            const easeProgress = progress * (2 - progress);
+            const currentValue = Math.floor(startValue + (targetValue - startValue) * easeProgress);
+            element.innerText = currentValue;
+            requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    fetchGitHubStats();
+
+    // --- PREMIUM INTERACTIVE EFFECTS ---
+    window.initCardGlow = function() {
+        const glowCards = document.querySelectorAll('.project-card, .stat-card, .calendar-card, .timeline-card, .link-card, .terminal-form');
+        
+        glowCards.forEach(card => {
+            // Remove existing listeners to prevent multiple triggers
+            card.removeEventListener('mousemove', handleCardMouseMove);
+            card.removeEventListener('mouseleave', handleCardMouseLeave);
+            
+            // Add listeners
+            card.addEventListener('mousemove', handleCardMouseMove);
+            card.addEventListener('mouseleave', handleCardMouseLeave);
+        });
+    };
+
+    function handleCardMouseMove(e) {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        // Subtle 3D tilt
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const tiltX = -((e.clientY - rect.top - centerY) / centerY) * 3; // Max 3 degrees
+        const tiltY = ((e.clientX - rect.left - centerX) / centerX) * 3;  // Max 3 degrees
+        
+        card.style.transition = 'none';
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    }
+
+    function handleCardMouseLeave(e) {
+        const card = e.currentTarget;
+        card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s';
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+    }
+
+    // Run initially for static cards
+    window.initCardGlow();
 });
 
 // Certificate Modal Logic is handled in folder.js and triggered via paper click
